@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-version = File.read(File.expand_path("../../HYDRA_VERSION", __FILE__)).strip
+version = '8.1.0'
 
 Gem::Specification.new do |gem|
   gem.authors       = ["Chris Beer", "Justin Coyne", "Matt Zumwalt"]
