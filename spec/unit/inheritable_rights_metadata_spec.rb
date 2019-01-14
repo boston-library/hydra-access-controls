@@ -4,25 +4,22 @@ describe Hydra::Datastream::InheritableRightsMetadata do
   before do
     Hydra.stub(:config).and_return(
       Hydra::Config.new.tap do |config|
-        config.permissions ={
+        config.permissions = {
           :discover => {:group =>"discover_access_group_ssim", :individual=>"discover_access_person_ssim"},
           :read => {:group =>"read_access_group_ssim", :individual=>"read_access_person_ssim"},
           :edit => {:group =>"edit_access_group_ssim", :individual=>"edit_access_person_ssim"},
-          :owner => "depositor_ssim",
-          :embargo_release_date => "embargo_release_date_dtsi",
-
           :inheritable => {
             :discover => {:group =>"inheritable_discover_access_group_ssim", :individual=>"inheritable_discover_access_person_ssim"},
             :read => {:group =>"inheritable_read_access_group_ssim", :individual=>"inheritable_read_access_person_ssim"},
-            :edit => {:group =>"inheritable_edit_access_group_ssim", :individual=>"inheritable_edit_access_person_ssim"},
-            :owner => "inheritable_depositor_ssim",
-            :embargo_release_date => "inheritable_embargo_release_date_dtsi"
+            :edit => {:group =>"inheritable_edit_access_group_ssim", :individual=>"inheritable_edit_access_person_ssim"}
           }
         }
+        config.permissions.embargo.release_date = "embargo_release_date_dtsi"
+        config.permissions.inheritable.embargo.release_date = "inheritable_embargo_release_date_dtsi"
       end
     )
   end
-  
+
   before(:each) do
     # The way RubyDora loads objects prevents us from stubbing the fedora connection :(
     # ActiveFedora::RubydoraConnection.stubs(:instance).returns(stub_everything())
@@ -34,16 +31,16 @@ describe Hydra::Datastream::InheritableRightsMetadata do
     @sample.permissions({:group=>"cool-kids"}, "edit")
     @sample.permissions({:group=>"slightly-cool-kids"}, "read")
     @sample.permissions({:group=>"posers"}, "discover")
-    @sample.permissions({:person=>"julius_caesar"}, "edit") 
-    @sample.permissions({:person=>"nero"}, "read") 
-    @sample.permissions({:person=>"constantine"}, "discover") 
+    @sample.permissions({:person=>"julius_caesar"}, "edit")
+    @sample.permissions({:person=>"nero"}, "read")
+    @sample.permissions({:person=>"constantine"}, "discover")
     @sample.embargo_release_date = "2102-10-01"
   end
 
   describe "to_solr" do
     subject {@sample.to_solr}
-    it "should NOT provide normal solr permissions fields" do    
-      subject.should_not have_key( Hydra.config[:permissions][:discover][:group] ) 
+    it "should NOT provide normal solr permissions fields" do
+      subject.should_not have_key( Hydra.config[:permissions][:discover][:group] )
       subject.should_not have_key( Hydra.config[:permissions][:discover][:individual] )
       subject.should_not have_key( Hydra.config[:permissions][:read][:group] )
       subject.should_not have_key( Hydra.config[:permissions][:read][:individual] )

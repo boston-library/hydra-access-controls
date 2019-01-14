@@ -109,7 +109,7 @@ describe Hydra::AdminPolicy do
   #
   describe "When accessing assets with Policies associated" do
     before do
-      @user = FactoryGirl.build(:martia_morocco)
+      @user = FactoryBot.build(:martia_morocco)
       RoleMapper.stub(:roles).with(@user).and_return(@user.roles)
     end
     before(:all) do

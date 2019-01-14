@@ -45,7 +45,7 @@ describe Hydra::AccessControlsEnforcement do
     end
     context "Given I am a registered user" do
       before do
-        @user = FactoryGirl.build(:martia_morocco)
+        @user = FactoryBot.build(:martia_morocco)
         @user.new_record = false
         allow(User).to receive(:find_by_user_key).and_return(@user)
         # This is a pretty fragile way to stub it...

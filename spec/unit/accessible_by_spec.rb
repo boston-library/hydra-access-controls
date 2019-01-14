@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe "active_fedora/accessible_by" do
-  let(:user) {FactoryGirl.build(:ira_instructor)}
+  let(:user) {FactoryBot.build(:ira_instructor)}
   let(:ability) {Ability.new(user)}
-  let(:private_obj) {FactoryGirl.create(:default_access_asset)}
-  let(:public_obj) {FactoryGirl.create(:open_access_asset)}
-  let(:editable_obj) {FactoryGirl.create(:group_edit_asset)}
+  let(:private_obj) {FactoryBot.create(:default_access_asset)}
+  let(:public_obj) {FactoryBot.create(:open_access_asset)}
+  let(:editable_obj) {FactoryBot.create(:group_edit_asset)}
 
   before do
     user.should_receive(:groups).at_most(:once).and_return(user.roles)

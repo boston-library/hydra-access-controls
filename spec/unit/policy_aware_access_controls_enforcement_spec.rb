@@ -91,7 +91,7 @@ describe Hydra::PolicyAwareAccessControlsEnforcement do
   before do
     @solr_parameters = {}
     @user_parameters = {}
-    @user = FactoryGirl.build(:sara_student)
+    @user = FactoryBot.build(:sara_student)
   end
   
   describe "policies_with_access" do

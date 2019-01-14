@@ -27,7 +27,7 @@ describe Ability do
 
   context "for a signed in user" do
     before do
-      @user = FactoryGirl.build(:registered_user)
+      @user = FactoryBot.build(:registered_user)
     end
     subject { Ability.new(@user) }
     it "should not be able to create ActiveFedora::Base objects" do
@@ -42,7 +42,7 @@ describe Ability do
   
   describe "Given an asset that has been made publicly available (ie. open access)" do
     before do
-      @asset = FactoryGirl.build(:open_access_asset)
+      @asset = FactoryBot.build(:open_access_asset)
       @asset.save
     end
     context "Then a not-signed-in user" do
@@ -62,7 +62,7 @@ describe Ability do
     end
     context "Then a registered user" do
       before do
-        @user = FactoryGirl.build(:registered_user)
+        @user = FactoryBot.build(:registered_user)
       end
       subject { Ability.new(@user) }
       it "should be able to view the asset" do
@@ -77,7 +77,7 @@ describe Ability do
   end
   
   describe "Given an asset with no custom access set" do
-    let(:asset) { FactoryGirl.create(:default_access_asset) }
+    let(:asset) { FactoryBot.create(:default_access_asset) }
     let(:solr_doc) { SolrDocument.new(asset.rightsMetadata.to_solr.merge(id: asset.pid)) }
     context "Then a not-signed-in user" do
       let(:user) { User.new.tap {|u| u.new_record = true } }
@@ -88,14 +88,14 @@ describe Ability do
       it { should_not be_able_to(:destroy, asset) }
     end
     context "Then a registered user" do
-      subject { Ability.new(FactoryGirl.build(:registered_user)) }
+      subject { Ability.new(FactoryBot.build(:registered_user)) }
       it { should_not be_able_to(:read, asset) }
       it { should_not be_able_to(:edit, asset) }
       it { should_not be_able_to(:update, asset) }
       it { should_not be_able_to(:destroy, asset) }
     end
     context "Then the Creator" do
-      subject { Ability.new(FactoryGirl.build(:joe_creator)) }
+      subject { Ability.new(FactoryBot.build(:joe_creator)) }
       it { should     be_able_to(:read, asset) }
       it { should     be_able_to(:edit, asset) }
       it { should     be_able_to(:edit, solr_doc) }
@@ -109,12 +109,12 @@ describe Ability do
 
   describe "Given an asset which registered users have read access to" do
     before do
-      @asset = FactoryGirl.build(:org_read_access_asset)
+      @asset = FactoryBot.build(:org_read_access_asset)
       @asset.save
     end
     context "The a registered user" do
       before do
-        @user = FactoryGirl.build(:registered_user)
+        @user = FactoryBot.build(:registered_user)
       end
       subject { Ability.new(@user) }
 
@@ -133,11 +133,11 @@ describe Ability do
   end
 
   describe "Given an asset with collaborator" do
-    before { @asset = FactoryGirl.create(:group_edit_asset) }
+    before { @asset = FactoryBot.create(:group_edit_asset) }
     after { @asset.destroy }
     context "Then a collaborator with edit access (user permision)" do
       before do
-        @user = FactoryGirl.build(:calvin_collaborator)
+        @user = FactoryBot.build(:calvin_collaborator)
       end
       subject { Ability.new(@user) }
 
@@ -155,7 +155,7 @@ describe Ability do
     end
     context "Then a collaborator with edit access (group permision)" do
       before do
-        @user = FactoryGirl.build(:martia_morocco)
+        @user = FactoryBot.build(:martia_morocco)
         RoleMapper.stub(:roles).with(@user).and_return(@user.roles)
       end
       subject { Ability.new(@user) }
@@ -168,12 +168,12 @@ describe Ability do
 
   describe "Given an asset where dept can read & registered users can discover" do
     before do
-      @asset = FactoryGirl.build(:dept_access_asset)
+      @asset = FactoryBot.build(:dept_access_asset)
       @asset.save
     end
     context "Then a registered user" do
       before do
-        @user = FactoryGirl.build(:registered_user)
+        @user = FactoryBot.build(:registered_user)
       end
       subject { Ability.new(@user) }
 
@@ -191,7 +191,7 @@ describe Ability do
     end
     context "Then someone whose role/group has read access" do
       before do
-        @user = FactoryGirl.build(:martia_morocco)
+        @user = FactoryBot.build(:martia_morocco)
         RoleMapper.stub(:roles).with(@user).and_return(@user.roles)
       end
       subject { Ability.new(@user) }
@@ -221,7 +221,7 @@ describe Ability do
           can :accept, ActiveFedora::Base
         end
       end
-      @user = FactoryGirl.create(:staff)
+      @user = FactoryBot.create(:staff)
     end
 
     after do
@@ -238,9 +238,9 @@ describe Ability do
 
   describe "calling ability on two separate objects" do
     before do
-      @asset1 = FactoryGirl.create(:org_read_access_asset)
-      @asset2 = FactoryGirl.create(:asset)
-      @user = FactoryGirl.build(:calvin_collaborator) # has access to @asset1, but not @asset2
+      @asset1 = FactoryBot.create(:org_read_access_asset)
+      @asset2 = FactoryBot.create(:asset)
+      @user = FactoryBot.build(:calvin_collaborator) # has access to @asset1, but not @asset2
     end
     after do
       @asset1.destroy
@@ -257,8 +257,8 @@ describe Ability do
   describe "download permissions" do
     subject { Ability.new(@user) }
     before do
-      @asset = FactoryGirl.create(:asset)
-      @user = FactoryGirl.build(:user)
+      @asset = FactoryBot.create(:asset)
+      @user = FactoryBot.build(:user)
     end
     after { @asset.destroy }
     context "user has read permission on the object" do
