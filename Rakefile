@@ -2,10 +2,10 @@
 require "bundler/gem_tasks"
 require 'rspec/core/rake_task'
 
-APP_ROOT= File.expand_path(File.join(File.dirname(__FILE__),".."))
+APP_ROOT="."
 require 'jettywrapper'
 # re-using hydra_jetty.rake from hydra-head
-import "tasks/hydra-access-controls.rake"
+load "tasks/hydra-access-controls.rake"
 
 desc 'Default: run specs.'
 task :default => :spec
