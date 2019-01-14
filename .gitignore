@@ -1,0 +1,9 @@
+Gemfile.lock
+tmp/
+jetty/
+pkg/
+.bundle/
+.ruby-version
+.ruby-gemset
+fits.log
+spec/test.log

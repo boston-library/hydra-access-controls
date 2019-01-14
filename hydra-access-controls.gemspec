@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-version = '8.1.0'
+version = '8.2.0'
 
 Gem::Specification.new do |gem|
   gem.authors       = ["Chris Beer", "Justin Coyne", "Matt Zumwalt"]
@@ -16,21 +16,22 @@ Gem::Specification.new do |gem|
   gem.version       = version
   gem.license       = "APACHE2"
 
-  gem.required_ruby_version = '>= 1.9.3'
+  gem.required_ruby_version = '>= 2.0.0'
 
-  gem.add_dependency 'activesupport', '~> 4.0'
-  gem.add_dependency "active-fedora", '~> 8.0.0'
+  gem.add_dependency 'rails', '>= 5', '< 6'
+  gem.add_dependency 'active-fedora', '>= 8.0.1', '< 8.7.0'
   gem.add_dependency "om", '~> 3.0', '>= 3.0.7'
-  gem.add_dependency 'cancancan', '~> 1.8'
+  gem.add_dependency 'cancancan', '~> 1.16'
   gem.add_dependency 'deprecation', '~> 0.1'
-  gem.add_dependency "blacklight"
+  gem.add_dependency 'blacklight', '>= 6.19.0', '< 7.0.0'
+  gem.add_dependency 'sass-rails', '~> 5.0'
 
-  # sass-rails is typically generated into the app's gemfile by `rails new`
-  # In rails 3 it's put into the "assets" group and thus not available to the
-  # app. Blacklight 5.3 requires bootstrap-sass which requires (but does not
-  # declare a dependency on) sass-rails
-  gem.add_dependency 'sass-rails'
-
-  gem.add_development_dependency "rake"
-  gem.add_development_dependency 'rspec'
+  gem.add_development_dependency 'rake'
+  gem.add_development_dependency 'bundler'
+  gem.add_development_dependency 'rspec', '~> 3.8'
+  gem.add_development_dependency 'rspec-its'
+  gem.add_development_dependency 'rspec-mocks'
+  gem.add_development_dependency 'rubocop-rspec'
+  gem.add_development_dependency 'jettywrapper', '~> 1.8.0', '< 2'
+  gem.add_development_dependency 'factory_bot'
 end
